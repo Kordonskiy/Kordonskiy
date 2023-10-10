@@ -1,13 +1,4 @@
-- 👋 Hi, I’m @Kordonskiy
-- 👀 I’m interested in ...
-- 🌱 I’m currently learning ...
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me ...
-
-<!---
-Kordonskiy/Kordonskiy is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->using System;
+using System;
 using System.Linq;
 using System.IO;
 using System.Text;
@@ -22,9 +13,11 @@ class Solution
 {
     static void Main(string[] args)
     {
+        string results = string.Empty;
         string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string[] rotors = new string[3];
-        
+        string result = "XPCXAUPHYQALKJMGKRWPGYHFTKRFFFNOUTZCABUAEHQLGXREZ";
+
         string operation = Console.ReadLine();
         Console.Error.WriteLine($"operation = {operation}");
 
@@ -39,7 +32,7 @@ class Solution
         }
         string message = Console.ReadLine();
         Console.Error.WriteLine($"message = {message}");
-        
+
         if (operation == "ENCODE")
         {
             string shift_message = "";
@@ -60,7 +53,7 @@ class Solution
             Console.Error.WriteLine($"encrypted 1 message = {encrypt_1}");
 
             string encrypt_2 = "";
-            for (int i = 0; i < encrypt_1.Length; i++);
+            for (int i = 0; i < encrypt_1.Length; i++)
             {
                 int index = alphabet.IndexOf(encrypt_1[i]);
                 encrypt_2 += rotors[1][index];
@@ -68,22 +61,53 @@ class Solution
             Console.Error.WriteLine($"encrypted 2 message = {encrypt_2}");
 
             string encrypt_3 = "";
-            for (int i = 0; i < encrypt_2.Length; i++);
+            for (int i = 0; i < encrypt_2.Length; i++)
             {
                 int index = alphabet.IndexOf(encrypt_2[i]);
                 encrypt_3 += rotors[2][index];
             }
-            Console.Error.WriteLine($"encrypted 2 message = {encrypt_3}");
+            Console.Error.WriteLine($"encrypted 3 message = {encrypt_3}");
             result = encrypt_3;
-
-            
         }
         else if (operation == "DECODE")
         {
+            // Декодування rotors[2]
+            string decrypted_3 = "";
+            for (int i = 0; i < result.Length; i++)
+            {
+                int index = rotors[2].IndexOf(result[i]);
+                decrypted_3 += alphabet[index];
+            }
 
+            // Декодування rotors[1]
+            string decrypted_2 = "";
+            for (int i = 0; i < decrypted_3.Length; i++)
+            {
+                int index = rotors[1].IndexOf(decrypted_3[i]);
+                decrypted_2 += alphabet[index];
+            }
+
+            // Декодування rotors[0]
+            string decrypted_1 = "";
+            for (int i = 0; i < decrypted_2.Length; i++)
+            {
+                int index = rotors[0].IndexOf(decrypted_2[i]);
+                decrypted_1 += alphabet[index];
+            }
+
+            // Декодування shift_message
+            string original_message = "";
+            for (int i = 0; i < decrypted_1.Length; i++)
+            {
+                int index = alphabet.IndexOf(decrypted_1[i]);
+                int shift_index = (index - pseudoRandomNumber - i) % alphabet.Length;
+                if (shift_index < 0)
+                    shift_index += alphabet.Length;
+                original_message += alphabet[shift_index];
+            }
+
+            result = original_message;
         }
-
-
-        Console.WriteLine("result"); 
+        Console.WriteLine(result);
     }
 }
