@@ -1,16 +1,4 @@
-1
-1
-1
-1
-1
-1
-1
-1
-1
-
-1
-11
-
+https://www.codingame.com/ide/puzzle/encryptiondecryption-of-enigma-machine
 using System;
 using System.Linq;
 using System.IO;
@@ -29,7 +17,7 @@ class Solution
         string results = string.Empty;
         string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string[] rotors = new string[3];
-        string result = "XPCXAUPHYQALKJMGKRWPGYHFTKRFFFNOUTZCABUAEHQLGXREZ";
+        string result = "";
 
         string operation = Console.ReadLine();
         Console.Error.WriteLine($"operation = {operation}");
